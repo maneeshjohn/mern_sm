@@ -1,0 +1,40 @@
+{
+  "name": "mern_sm",
+  "version": "1.0.0",
+  "description": "Simple social media eith MERN stack",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maneeshjohn/mern_sm.git"
+  },
+  "keywords": [
+    "mern",
+    "javascript",
+    "react",
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "Maneesh John",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maneeshjohn/mern_sm/issues"
+  },
+  "homepage": "https://github.com/maneeshjohn/mern_sm#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.10",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
