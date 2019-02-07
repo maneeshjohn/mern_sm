@@ -1,6 +1,8 @@
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
+const key = require('../../config/config').secretKey;
 const User = require('../models/User');
 
 const usersController = {
@@ -11,9 +13,9 @@ const usersController = {
           return res.status(400).json({ email: 'Email already exists' });
         } else {
           const avatar = gravatar.url(req.body.email, {
-            s: '200',  //  size
-            r: 'pg',  //  rating
-            d: 'mm'  //  default
+            s: '200',
+            r: 'pg',
+            d: 'mm'
           });
 
           const newUser = new User({
@@ -48,7 +50,13 @@ const usersController = {
         bcrypt.compare(password, user.password)
           .then(success => {
             if(success) {
-              res.json({ msg: 'Success' })
+              const payload = { id: user.id, name: user.name, avatar: user.avatar };
+              jwt.sign(
+                payload,
+                key,
+                { expiresIn: 3600 }, (err, token) => {
+                  res.json({ success: true, token: `Bearer ${token}` })
+                })
             } else {
               return res.status(400).json({ msg: 'Invalid password' });
             }
