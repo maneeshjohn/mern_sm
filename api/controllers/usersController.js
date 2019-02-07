@@ -4,13 +4,20 @@ const jwt = require('jsonwebtoken');
 
 const key = require('../../config/config').secretKey;
 const User = require('../models/User');
+const validation = require('../../config/validation/userValidation');
 
 const usersController = {
   registerNewUser: function(req, res){
+    const { errors, valid } = validation.registerValidation(req.body);
+    if(!valid) {
+      return res.status(400).json(errors);
+    }
+
     User.findOne({ email: req.body.email })
       .then(user => {
         if(user) {
-          return res.status(400).json({ email: 'Email already exists' });
+          errors.email = "Email already exists";
+          return res.status(400).json(errors);
         } else {
           const avatar = gravatar.url(req.body.email, {
             s: '200',
@@ -39,13 +46,19 @@ const usersController = {
   },
 
   loginUser: function(req, res){
+    const { errors, valid } = validation.loginValidation(req.body);
+    if(!valid) {
+      return res.status(400).send(errors);
+    }
+
     const email = req.body.email;
     const password = req.body.password;
 
     User.findOne({email})
       .then(user => {
         if(!user) {
-          return res.status(404).json({ email: "User doesn't exist" });
+          errors.email = "User doesn't exist";
+          return res.status(404).json(errors);
         }
         bcrypt.compare(password, user.password)
           .then(success => {
@@ -58,7 +71,8 @@ const usersController = {
                   res.json({ success: true, token: `Bearer ${token}` })
                 })
             } else {
-              return res.status(400).json({ msg: 'Invalid password' });
+              errors.password = 'Incorrect password';
+              return res.status(400).json(errors);
             }
           })
       })
