@@ -1,14 +1,14 @@
 const validator = require('validator');
-const isValid = require('./emptyChecker');
+const empty = require('./emptyChecker');
 
 module.exports = {
   registerValidation: function(data){
     let errors = {};
 
-    data.name = !isValid(data.name)? data.name: '';
-    data.email = !isValid(data.email)? data.email: '';
-    data.password = !isValid(data.password)? data.password: '';
-    data.password2 = !isValid(data.password2)? data.password2: '';
+    data.name = !empty(data.name)? data.name: '';
+    data.email = !empty(data.email)? data.email: '';
+    data.password = !empty(data.password)? data.password: '';
+    data.password2 = !empty(data.password2)? data.password2: '';
 
     if(!validator.equals(data.password, data.password2)) {
       errors.password2 = 'Passwords do not match';
@@ -37,15 +37,15 @@ module.exports = {
 
     return {
       errors,
-      valid: isValid(errors)
+      valid: empty(errors)
     }
   },
 
   loginValidation: function(data){
     let errors = {};
     
-    data.email = !isValid(data.email)? data.email: '';
-    data.password = !isValid(data.password)? data.password: '';
+    data.email = !empty(data.email)? data.email: '';
+    data.password = !empty(data.password)? data.password: '';
 
     if(!validator.isEmail(data.email)) {
       errors.email = 'Email is invalid';
@@ -59,7 +59,7 @@ module.exports = {
 
     return {
       errors,
-      valid: isValid(errors)
+      valid: empty(errors)
     }
   }
 }
