@@ -1,12 +1,15 @@
 const Profile = require('../models/Profile');
 const User = require('../models/User');
 
+const validation = require('../../config/validation/profileValidation');
+
 const profileController = {
   getProfile: function(req, res){
     Profile.findOne({ user: req.user.id })
+      .populate('user', ['name', 'avatar'])
       .then(profile => {
         if(!profile) {
-          return res.status(400).json({error: 'User not found'});
+          return res.status(400).json({ error: 'User not found' });
         }
         res.json(profile);
       })
@@ -14,6 +17,11 @@ const profileController = {
   },
 
   updateProfile: function(req, res){
+    const { errors, valid } = validation.updateProfileValidation(req.body);
+    if(!valid) {
+      return res.status(400).json(errors);
+    }
+
     const profileData = {};
     profileData.user = req.user.id;
 
@@ -45,7 +53,8 @@ const profileController = {
           Profile.findOne({ handle: profileData.handle })
             .then(profile => {
               if(profile) {
-                return res.status(400).json({ handle: 'That handle is already taken'});
+                errors.handle = 'That handle is already taken';
+                return res.status(400).json(errors);
               }
               //  Save profile
               new Profile(profileData).save()
