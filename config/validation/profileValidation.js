@@ -5,9 +5,14 @@ module.exports = {
   updateProfileValidation: function(data) {
     let errors = {};
 
-    data.handle = !empty(data.handle)? data.handle: '';    
+    data.handle = !empty(data.handle)? data.handle: '';
     data.position = !empty(data.position)? data.position: '';
     data.skills = !empty(data.skills)? data.skills: '';
+    data.facebook = !empty(data.facebook)? data.facebook: '';
+    data.twitter = !empty(data.twitter)? data.twitter: '';
+    data.instagram = !empty(data.instagram)? data.instagram: '';
+    data.linkedin = !empty(data.linkedin)? data.linkedin: '';
+    data.youtube = !empty(data.youtube)? data.youtube: '';
 
     if(!validator.isLength(data.handle, { min:4, max:15 })) {
       errors.handle = 'Length should be between 4 and 15 characters';
