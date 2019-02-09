@@ -4,7 +4,9 @@ const User = require('../models/User');
 const validation = require('../../config/validation/profileValidation');
 
 const profileController = {
+
   getProfile: function(req, res){
+
     Profile.findOne({ user: req.user.id })
       .populate('user', ['name', 'avatar'])
       .then(profile => {
@@ -16,7 +18,23 @@ const profileController = {
       .catch(err => res.status(400).json(err));
   },
 
+  getProfileByHandle: function(req, res) {
+
+    let errors = {};
+    Profile.findOne({ handle: req.params.handle })
+      .populate('user', ['name', 'avatar'])
+      .then(profile => {
+        if(!profile){
+          errors.notFound = 'This profile does not exist';
+          return res.status(400).json(errrs);
+        }
+        res.json(profile);
+      })
+      .catch(err => res.status(400).json(err));
+  },
+
   updateProfile: function(req, res){
+
     const { errors, valid } = validation.updateProfileValidation(req.body);
     if(!valid) {
       return res.status(400).json(errors);
