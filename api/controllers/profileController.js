@@ -107,6 +107,98 @@ const profileController = {
             })
         }
       })
+  },
+  
+  addExperience: function(req, res) {
+
+    const { errors, valid } = validation.addExperienceValidation(req.body);
+    if (!valid) {
+      return res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        const exp = {
+          title: req.body.title,
+          company: req.body.company,
+          location: req.body.location,
+          from: req.body.from,
+          to: req.body.to,
+          current: req.body.current,
+          description: req.body.description
+        };
+
+        profile.experience.unshift(exp);
+        profile.save()
+          .then(profile => res.json(profile))
+          .catch(err => res.status(404).json(err.message));
+      })
+  },
+
+  addEducation: function(req, res) {
+
+    const { errors, valid } = validation.addEducationValidation(req.body);
+    if (!valid) {
+      return res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        const edu = {
+          university: req.body.university,
+          institution: req.body.institution,
+          stream: req.body.stream,
+          location: req.body.location,
+          from: req.body.from,
+          to: req.body.to,
+          current: req.body.current,
+          description: req.body.description
+        };
+
+        profile.education.unshift(edu);
+        profile.save()
+          .then(profile => res.json(profile))
+          .catch(err => res.status(404).json(err.message));
+      })
+  },
+
+  deleteEducation: function(req, res) {
+
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        const deleteIndex = profile.education.map(item => item.id).indexOf(req.params.id);
+        
+        profile.education.splice(deleteIndex, 1);
+        profile.save()
+          .then(profile => res.json(profile))
+          .catch(err => res.status(404).json(err.message));
+      })
+      .catch(err => res.status(404).json(err.message));
+  },
+
+  deleteExperience: function(req, res) {
+
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        const deleteIndex = profile.experience.map(item => item.id).indexOf(req.params.id);
+        
+        profile.experience.splice(deleteIndex, 1);
+        profile.save()
+          .then(profile => res.json(profile))
+          .catch(err => res.status(404).json(err.message));
+      })
+      .catch(err => res.status(404).json(err.message));
+  },
+
+  deleteProfile: function(req, res) {
+
+    Profile.findOneAndRemove({ user: req.user.id })
+      .then(() => {
+        User.findByIdAndRemove({ _id: req.user.id })
+          .then(() => res.json({ done: true }))
+          .catch(err => res.status(400).json(err.message));
+      })
+      .catch(err => res.status(404).json(err.message));
   }
 }
 

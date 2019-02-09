@@ -51,5 +51,65 @@ module.exports = {
       errors,
       valid: empty(errors)
     }
+  },
+
+  addExperienceValidation: function(data) {
+    let errors = {};
+
+    data.title = !empty(data.title)? data.title: '';    
+    data.company = !empty(data.company)? data.company: '';
+    data.location = !empty(data.location)? data.location: '';
+    data.from = !empty(data.from)? data.from: '';
+
+    if(validator.isEmpty(data.title)){
+      errors.title = 'Title is required';
+    }
+    if(validator.isEmpty(data.company)){
+      errors.company = 'Company is required';
+    }
+    if(validator.isEmpty(data.location)){
+      errors.company = 'Location is required';
+    }
+    if(validator.isEmpty(data.from)){
+      errors.from = 'Start date is required';
+    }
+
+
+    return {
+      errors,
+      valid: empty(errors)
+    }
+  },
+
+  addEducationValidation: function(data) {
+    let errors = {};
+
+    data.university = !empty(data.university)? data.university: '';    
+    data.institution = !empty(data.institution)? data.institution: '';
+    data.stream = !empty(data.stream)? data.stream: '';
+    data.location = !empty(data.location)? data.location: '';
+    data.from = !empty(data.from)? data.from: '';
+
+    if(validator.isEmpty(data.university)){
+      errors.university = 'University is required';
+    }    
+    if(validator.isEmpty(data.institution)){
+      errors.institution = 'Institution is required';
+    }
+    if(validator.isEmpty(data.stream)){
+      errors.stream = 'Field is required';
+    }
+    if(validator.isEmpty(data.location)){
+      errors.company = 'Location is required';
+    }
+    if(validator.isEmpty(data.from)){
+      errors.from = 'Start date is required';
+    }
+
+
+    return {
+      errors,
+      valid: empty(errors)
+    }
   }
 }

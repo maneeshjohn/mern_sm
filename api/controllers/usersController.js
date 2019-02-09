@@ -67,7 +67,7 @@ const usersController = {
               jwt.sign(
                 payload,
                 key,
-                { expiresIn: 3600 }, (err, token) => {
+                { expiresIn: (3600 * 24) }, (err, token) => {
                   res.json({ success: true, token: `Bearer ${token}` })
                 })
             } else {

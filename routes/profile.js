@@ -14,4 +14,14 @@ router.get('/users', passport.authenticate('jwt', { session: false }), (req, res
 
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => profileController.updateProfile(req, res));
 
+router.post('/experience', passport.authenticate('jwt', { session: false }), (req, res) => profileController.addExperience(req, res));
+
+router.post('/education', passport.authenticate('jwt', { session: false }), (req, res) => profileController.addEducation(req, res));
+
+router.delete('/education/:id', passport.authenticate('jwt', { session: false }), (req, res) => profileController.deleteEducation(req, res));
+
+router.delete('/experience/:id', passport.authenticate('jwt', { session: false }), (req, res) => profileController.deleteExperience(req, res));
+
+router.delete('/delete', passport.authenticate('jwt', { session: false }), (req, res) => profileController.deleteProfile(req, res));
+
 module.exports = router;
