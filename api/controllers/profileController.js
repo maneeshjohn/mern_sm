@@ -19,18 +19,29 @@ const profileController = {
   },
 
   getProfileByHandle: function(req, res) {
-
-    let errors = {};
+    
     Profile.findOne({ handle: req.params.handle })
       .populate('user', ['name', 'avatar'])
       .then(profile => {
-        if(!profile){
-          errors.notFound = 'This profile does not exist';
-          return res.status(400).json(errrs);
+        if(!profile){          
+          return res.status(400).json({ error: 'This profile does not exist' });
         }
         res.json(profile);
       })
-      .catch(err => res.status(400).json(err));
+      .catch(err => res.status(400).json({ error: 'There is no profile for this user' }));
+  },
+
+  getProfileById: function(req, res) {
+    
+    Profile.findOne({ user: req.params.user_id })
+      .populate('user', ['name', 'avatar'])
+      .then(profile => {
+        if(!profile){          
+          return res.status(400).json({ error: 'This profile does not exist' });
+        }
+        res.json(profile);
+      })
+      .catch(err => res.status(400).json({ error: 'There is no profile for this user' }));
   },
 
   updateProfile: function(req, res){

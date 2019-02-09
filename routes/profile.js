@@ -8,6 +8,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 
 router.get('/handle/:handle', (req, res) => profileController.getProfileByHandle(req, res));
 
+router.get('/user/:user_id', (req, res) => profileController.getProfileById(req, res));
+
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => profileController.updateProfile(req, res));
 
 module.exports = router;
