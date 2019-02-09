@@ -10,6 +10,8 @@ router.get('/handle/:handle', (req, res) => profileController.getProfileByHandle
 
 router.get('/user/:user_id', (req, res) => profileController.getProfileById(req, res));
 
+router.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => profileController.getAllProfiles(req, res));
+
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => profileController.updateProfile(req, res));
 
 module.exports = router;

@@ -44,6 +44,21 @@ const profileController = {
       .catch(err => res.status(400).json({ error: 'There is no profile for this user' }));
   },
 
+  getAllProfiles: function(req, res) {
+
+    Profile.find()
+      .populate('user', ['name', 'avatar'])
+      .then(profiles => {
+        if(!profiles) {
+          return res.status(404).send({ error: 'There are no profiles' });
+        }
+        res.json(profiles);
+      })
+      .catch(err => {
+        res.status(404).send({ error: 'There are no profiles' })
+      });
+  },
+
   updateProfile: function(req, res){
 
     const { errors, valid } = validation.updateProfileValidation(req.body);
