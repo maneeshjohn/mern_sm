@@ -50,6 +50,29 @@ const postsController = {
               .then(() => res.json({ done: true }))
               .catch(err => res.status(400).json({ error: 'Post cannot be deleted' }));
           })
+          .catch(err => res.status(400).json({ error: 'Post not found' }));
+      })
+      .catch(err => res.status(400).json({ error: 'User not found' }));
+  },
+
+  likePost: function(req, res) {
+    
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        Post.findById(req.params.id)
+          .then(post => {
+            const liked = post.likes.filter(item => item.user.toString() === req.user.id).length > 0;            
+            if(liked) {
+              const index = post.likes.map( item => item.user.toString()).indexOf(req.user.id);
+              post.likes.splice(index, 1);
+              post.save();
+              return res.json(post);
+            }
+
+            post.likes.push({ user: req.user.id });
+            post.save()
+              .then(() => res.json({post}));
+          })
           .catch(err => res.status(400).json({ error: 'Post not found' }));          
       })
       .catch(err => res.status(400).json({ error: 'User not found' }));

@@ -12,4 +12,6 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 
 router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, res) => postsController.deletePost(req, res));
 
+router.post('/like/:id', passport.authenticate('jwt', { session: false }), (req, res) => postsController.likePost(req, res));
+
 module.exports = router;
