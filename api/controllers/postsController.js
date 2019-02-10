@@ -76,6 +76,48 @@ const postsController = {
           .catch(err => res.status(400).json({ error: 'Post not found' }));          
       })
       .catch(err => res.status(400).json({ error: 'User not found' }));
+  },
+
+  addComment: function(req, res) {
+
+    const { errors, valid } = validation.commentValidation(req.body);
+    if(!valid) {
+      return res.status(400).json(errors);
+    }
+        
+    Post.findById(req.params.id)
+      .then(post => {
+        const newComment = {
+          content: req.body.content,
+          name: req.body.name,
+          avatar: req.body.avatar,
+          user: req.user.id
+        };
+
+        post.comments.unshift(newComment);
+        post.save()
+          .then(post => res.json(post))
+          .catch(err => res.status(400).json({ error: 'Comment could not be added' }));
+      })
+      .catch(err => res.status(404).json({ error: 'Post not found' }))
+  },
+
+  removeComment: function(req, res) {
+        
+    Post.findById(req.params.id)
+      .then(post => {
+        const comment = post.comments.filter(item => item._id.toString() === req.params.com_id).length > 0;
+        if(!comment) {
+          return res.status(404).json({ error: 'Comment not found '})
+        }
+
+        const index = post.comments.map(item => item._id.toString()).indexOf(req.params.com_id);
+        post.comments.splice(index, 1);
+        post.save()
+          .then(post => res.json(post))
+          .catch(err => res.status(400).json({ error: 'Comment could not be deleted' }));
+      })
+      .catch(err => res.status(404).json({ error: 'Post not found' }))
   }
 }
 

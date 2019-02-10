@@ -13,11 +13,26 @@ module.exports = {
     }
     if(validator.isEmpty(data.content)){
       errors.content = 'Post is empty';
-    }    
+    }
 
     return {
       errors,
       valid: empty(errors)
-    }    
-  }
+    }
+  },
+
+  commentValidation: function(data) {
+    let errors = {};
+
+    data.content = !empty(data.content)? data.content: '';
+
+    if(validator.isEmpty(data.content)){
+      errors.content = 'Comment is empty';
+    }
+
+    return {
+      errors,
+      valid: empty(errors)
+    }
+  }  
 }

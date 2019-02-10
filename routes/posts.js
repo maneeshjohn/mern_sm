@@ -14,4 +14,8 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, re
 
 router.post('/like/:id', passport.authenticate('jwt', { session: false }), (req, res) => postsController.likePost(req, res));
 
+router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (req, res) => postsController.addComment(req, res));
+
+router.delete('/comment/:id/:com_id', passport.authenticate('jwt', { session: false }), (req, res) => postsController.removeComment(req, res));
+
 module.exports = router;
