@@ -1,13 +1,57 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { logoutUser } from '../../redux/actions/authActions'
+import { Link, withRouter } from 'react-router-dom'
 import { Container, Navbar, NavbarToggler, Collapse, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
 
-const Navigation = () => {
+const Navigation = props => {
   const [isOpen, setOpen] = useState(false)
 
   const toggle = () => {
     setOpen(!isOpen)
   }
+
+  const guestLinks = (
+    <Nav
+      className="ml-auto"
+      navbar>
+      <NavItem>
+        <Link
+          className="no-dec"
+          to="/login">
+          <NavLink>Login</NavLink>
+        </Link>
+      </NavItem>
+      <NavItem>
+        <Link
+          className="no-dec"
+          to="/register">
+          <NavLink>Register</NavLink>
+        </Link>
+      </NavItem>
+    </Nav>
+  )
+
+  const userLinks = (   
+    <Nav
+      className="ml-auto"
+      navbar>
+      <NavItem>
+        <Link
+          className="no-dec"
+          to="/login">
+          <NavLink></NavLink>
+        </Link>
+      </NavItem>
+      <NavItem>                
+        <NavLink
+          onClick={() => props.logoutUser(props.history)}
+          >Logout
+        </NavLink>        
+      </NavItem>
+    </Nav>
+  )
   
   return(
     <div>
@@ -25,24 +69,7 @@ const Navigation = () => {
           <Collapse
             isOpen={ isOpen }
             navbar>
-            <Nav
-              className="ml-auto"
-              navbar>
-              <NavItem>
-                <Link
-                  className="no-dec"
-                  to="/login">
-                  <NavLink>Login</NavLink>
-                </Link>
-              </NavItem>
-              <NavItem>
-                <Link
-                  className="no-dec"
-                  to="/register">
-                  <NavLink>Register</NavLink>
-                </Link>
-              </NavItem>              
-            </Nav>
+            { props.auth.user.name? userLinks : guestLinks }
           </Collapse>
         </Container>
       </Navbar>
@@ -50,4 +77,11 @@ const Navigation = () => {
   )
 }
 
-export default Navigation
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(withRouter(Navigation))

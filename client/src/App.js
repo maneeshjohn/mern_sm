@@ -10,6 +10,7 @@ import Navigation from './components/layout/Navigation'
 import Landing from './components/layout/Landing'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
+import Dashboard from './components/dashboard/Dashboard'
 import Footer from './components/layout/Footer'
 
 const token = localStorage.jwtToken
@@ -25,9 +26,10 @@ class App extends Component {
         <BrowserRouter>
           <div className="App">
             <Navigation />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
+            <Route exact path="/" component={ Landing } />
+            <Route exact path="/login" component={ Login } />
+            <Route exact path="/register" component={ Register } />
+            <Route exact path="/dashboard" component={ Dashboard } />
             <Footer />
           </div>
         </BrowserRouter>
