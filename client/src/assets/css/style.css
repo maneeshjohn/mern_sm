@@ -6,17 +6,57 @@
 
 html {  
   width: 100%;
-  font-size: 62.5%;
+  font-size: 80%;
 }
 
 body {  
-  width: 100%;
-  font-family: Ubuntu, sans-serif;
+  width: 100%;  
 }
 
-/*  Landing  */
-.landing {  
-  background-size: cover;
+img {
   width: 100%;
-  height: 100vh;  
+}
+
+.landing {
+  position: relative;
+  background: url('../img/showcase.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 87vh;
+}
+
+.landing-inner {
+  padding-top: 80px;
+}
+
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.card-form {
+  opacity: 0.9;
+}
+
+.latest-profiles-img {
+  width: 40px;
+  height: 40px;
+}
+
+.form-control::placeholder {
+  color: #bbb !important;
+}
+
+.no-dec {
+  text-decoration: none;
+  color: #FFF;
+}
+
+.no-dec:hover {
+  text-decoration: none;
+  color: #BBB;
 }
