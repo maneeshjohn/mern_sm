@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
-import { Container, Row, Col, Form, FormGroup, Input, FormText, Button } from 'reactstrap'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { registerNewUser } from '../../redux/actions/authActions'
+import { Container, Row, Col, Form, FormGroup, Button } from 'reactstrap'
+import { InputComponent } from '../common/InputComponent'
 
-const Register = () => {
-  const [values, setValues] = useState({ name: '', email: '', password: '', password2: '' })
+const Register = props => {
+  const [values, setValues] = useState({ name: '', email: '', password: '', password2: '' })  
   const [noMatch, setNoMatch] = useState('')
 
   const handleValues = e => {
@@ -13,7 +18,7 @@ const Register = () => {
   const handleSubmit = e => {
     e.preventDefault()    
     if(values.password == values.password2){
-      console.log(values)
+      props.registerNewUser(values, props.history)
     } else {
       setNoMatch('Passwords do not match')
     }
@@ -30,44 +35,39 @@ const Register = () => {
               noValidate
               className="p-3"
               onSubmit={ handleSubmit }>
+              <InputComponent
+                type="text"
+                name="name"
+                value={ values.name }
+                placeholder="Enter your full name"
+                change={ handleValues }
+                error={ props.errors.name } />
+              <InputComponent
+                type="email"
+                name="email"
+                value={ values.email }
+                placeholder="Enter your email id"
+                change={ handleValues }
+                error={ props.errors.email } />
+              <InputComponent
+                type="password"
+                name="password"
+                value={ values.password }
+                placeholder="Enter your password"
+                change={ handleValues }
+                error={ props.errors.password } />
+              <InputComponent
+                type="password"
+                name="password2"
+                value={ values.password2 }
+                placeholder="Confirm your password"
+                change={ handleValues }
+                error={ props.errors.password2 } />
               <FormGroup>
-                <Input
-                  type="text"
-                  name="name"
-                  value={ values.name }
-                  placeholder="Enter your full name"
-                  onChange={ handleValues } />
-                  <FormText className="text-center">Email is compatible with gravatar</FormText>
-              </FormGroup>
-              <FormGroup>
-                <Input
-                  type="email"
-                  name="email"
-                  value={ values.email }
-                  placeholder="Enter your Email Id"
-                  onChange={ handleValues } />
-                  <FormText className="text-center">Email is compatible with gravatar</FormText>
-              </FormGroup>
-              <FormGroup>
-                <Input
-                  type="password"
-                  name="password"
-                  value={ values.password }
-                  placeholder="Enter your Password"
-                  onChange={ handleValues } />
-                  <FormText className="text-center">Email is compatible with gravatar</FormText>
-              </FormGroup>
-              <FormGroup>
-                <Input
-                  type="password"
-                  name="password2"
-                  value={ values.password2 }
-                  placeholder="Confirm your password"
-                  onChange={ handleValues } />
-                  <FormText className="text-center">{ noMatch }</FormText>
-              </FormGroup>
-              <FormGroup>
-                <Button color="info" block>Register</Button>
+                <Button
+                  color="info" 
+                  block>
+                  Register</Button>
               </FormGroup>
             </Form>
           </Col>
@@ -77,4 +77,16 @@ const Register = () => {
   )
 }
 
-export default Register
+Register.propTypes = {
+  errors: PropTypes.object.isRequired,
+  registerNewUser: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  errors: state.errors
+})
+
+export default connect(
+  mapStateToProps,
+  { registerNewUser }
+)(withRouter(Register))

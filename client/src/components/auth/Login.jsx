@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
-import axios from 'axios'
-import { Container, Row, Col, Form, FormGroup, Input, FormText, Button } from 'reactstrap'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { authorizeUser } from '../../redux/actions/authActions'
+import { Container, Row, Col, Form, FormGroup, Button } from 'reactstrap'
 import { API } from  '../../utils/routes'
+import { InputComponent } from '../common/InputComponent'
 
-const Login = () => {
-  const [values, setValues] = useState({ email: '', password: '' })
+const Login = props => {
+  const [values, setValues] = useState({ email: '', password: '' })  
 
   const handleValues = e => {
     const { name, value } = e.target
@@ -12,10 +16,8 @@ const Login = () => {
   }  
 
   const handleSubmit = e => {
-    e.preventDefault()    
-    axios.post(`${API}/api/users/login`, values)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
+    e.preventDefault()
+    props.authorizeUser(values, props.history)
   }
 
   return(
@@ -28,27 +30,26 @@ const Login = () => {
             <Form
               noValidate
               className="p-3"
-              onSubmit={ handleSubmit }>
+              onSubmit={ handleSubmit }>              
+              <InputComponent
+                type="email"
+                name="email"
+                value={ values.email }
+                placeholder="Enter your email id"
+                change={ handleValues }
+                error={ props.errors.email } />
+              <InputComponent
+                type="password"
+                name="password"
+                value={ values.password }
+                placeholder="Enter your password"
+                change={ handleValues }
+                error={ props.errors.password } />
               <FormGroup>
-                <Input
-                  type="email"
-                  name="email"
-                  value={ values.email }
-                  placeholder="Enter your Email Id"
-                  onChange={ handleValues } />
-                  <FormText className="text-center">Email is compatible with gravatar</FormText>
-              </FormGroup>
-              <FormGroup>
-                <Input
-                  type="password"
-                  name="password"
-                  value={ values.password }
-                  placeholder="Enter your Password"
-                  onChange={ handleValues } />
-                  <FormText className="text-center">Email is compatible with gravatar</FormText>
-              </FormGroup>
-              <FormGroup>
-                <Button color="info" block>Login</Button>
+                <Button
+                  color="info" 
+                  block>
+                  Login</Button>
               </FormGroup>
             </Form>
           </Col>
@@ -58,4 +59,16 @@ const Login = () => {
   )
 }
 
-export default Login
+Login.propTypes = {
+  errors: PropTypes.object.isRequired,
+  authorizeUser: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  errors: state.errors
+})
+
+export default connect(
+  mapStateToProps,
+  { authorizeUser }
+)(withRouter(Login))
