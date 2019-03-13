@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { logoutUser } from '../../redux/actions/authActions'
-import { Link, withRouter } from 'react-router-dom'
+import { clearProfile } from '../../redux/actions/profileActions'
+import { Link } from 'react-router-dom'
 import { Container, Navbar, NavbarToggler, Collapse, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
 
 const Navigation = props => {
@@ -10,6 +11,11 @@ const Navigation = props => {
 
   const toggle = () => {
     setOpen(!isOpen)
+  }
+
+  const logout = () => {
+    props.clearProfile()
+    props.logoutUser()
   }
 
   const guestLinks = (
@@ -41,12 +47,18 @@ const Navigation = props => {
         <Link
           className="no-dec"
           to="/login">
-          <NavLink></NavLink>
+          <NavLink>
+            <img
+              src={ props.auth.user.avatar}
+              className="rounded-circle"
+              style={{ width: '25px' }}
+              alt={ props.auth.user.name }/>
+          </NavLink>
         </Link>
       </NavItem>
       <NavItem>                
         <NavLink
-          onClick={() => props.logoutUser(props.history)}
+          onClick={ logout }
           >Logout
         </NavLink>        
       </NavItem>
@@ -69,7 +81,7 @@ const Navigation = props => {
           <Collapse
             isOpen={ isOpen }
             navbar>
-            { props.auth.user.name? userLinks : guestLinks }
+            { props.auth.isAuthenticated? userLinks : guestLinks }
           </Collapse>
         </Container>
       </Navbar>
@@ -77,11 +89,17 @@ const Navigation = props => {
   )
 }
 
+Navigation.propTypes = {
+  auth: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  clearProfile: PropTypes.func.isRequired
+}
+
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth  
 })
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
-)(withRouter(Navigation))
+  { logoutUser, clearProfile }
+)(Navigation)

@@ -3,7 +3,8 @@ import { Provider } from 'react-redux'
 import store from './redux/store/store'
 import { BrowserRouter, Route } from 'react-router-dom'
 import setAuthToken from './utils/setAuthToken'
-import { setUser } from './redux/actions/authActions'
+import { setUser, logoutUser } from './redux/actions/authActions'
+import { clearProfile } from './redux/actions/profileActions'
 import jwt_decode from 'jwt-decode'
 
 import Navigation from './components/layout/Navigation'
@@ -16,7 +17,15 @@ import Footer from './components/layout/Footer'
 const token = localStorage.jwtToken
 if(token){
   setAuthToken(token)
-  store.dispatch(setUser(jwt_decode(token)))
+  const user = jwt_decode(token)
+  store.dispatch(setUser(user))
+  const now = (Date.now() / 1000)
+
+  if(user.exp < now){  
+  store.dispatch(logoutUser())
+  store.dispatch(clearProfile())
+  window.location.href = '/login'
+}
 }
 
 class App extends Component {

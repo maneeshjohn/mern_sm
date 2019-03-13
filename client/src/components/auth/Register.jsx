@@ -7,8 +7,7 @@ import { Container, Row, Col, Form, FormGroup, Button } from 'reactstrap'
 import { InputComponent } from '../common/InputComponent'
 
 const Register = props => {
-  const [values, setValues] = useState({ name: '', email: '', password: '', password2: '' })  
-  const [noMatch, setNoMatch] = useState('')
+  const [values, setValues] = useState({ name: '', email: '', password: '', password2: '' })    
 
   const handleValues = e => {
     const { name, value } = e.target
@@ -16,12 +15,8 @@ const Register = props => {
   }  
 
   const handleSubmit = e => {
-    e.preventDefault()    
-    if(values.password == values.password2){
-      props.registerNewUser(values, props.history)
-    } else {
-      setNoMatch('Passwords do not match')
-    }
+    e.preventDefault()        
+    props.registerNewUser(values, props.history)    
   }
 
   return(

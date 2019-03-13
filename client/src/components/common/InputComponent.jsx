@@ -12,7 +12,7 @@ export const InputComponent = props =>
       placeholder={ props.placeholder }
       disabled={ props.disabled }
       className={ props.error && 'is-invalid' } />
-    { props.info && <div className="invalid-feedback text-center">{ props.info }</div> }
+    { props.info && <FormText className="text-center">{ props.info }</FormText> }
     { props.error && <div className="invalid-feedback text-center">{ props.error }</div> }
   </FormGroup>
 

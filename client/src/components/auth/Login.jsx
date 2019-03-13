@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { authorizeUser } from '../../redux/actions/authActions'
 import { Container, Row, Col, Form, FormGroup, Button } from 'reactstrap'
-import { API } from  '../../utils/routes'
 import { InputComponent } from '../common/InputComponent'
 
 const Login = props => {
