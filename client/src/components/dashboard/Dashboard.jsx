@@ -3,17 +3,29 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Container } from 'reactstrap'
 import { getCurrentProfile } from '../../redux/actions/profileActions'
+import Spinner from '../common/Spinner'
 
 const Dashboard = props => {
   const [profile, setProfile] = useState(props.profile)
   useEffect(() => {
     props.getCurrentProfile()    
-  })
+  }, [profile])
+    
+  let dashboardContent
+  if(profile.loading){
+    dashboardContent = <Spinner />
+  } else {
+    dashboardContent = (
+      <div>
+        <h1 className="display-4 text-center">{ props.auth.user.name }</h1>
+      </div>
+    )
+  }
 
   return(
     <div className="dashboard">
       <Container>
-        <h1 className="display-4 text-center">{ props.auth.user.name }</h1>
+        { dashboardContent }
       </Container>
     </div>
   )

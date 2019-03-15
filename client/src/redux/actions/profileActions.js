@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_CURRENT_PROFILE, PROFILE_LOADING, CLEAR_PROFILE, GET_ERRORS } from './types'
+import { GET_CURRENT_PROFILE, PROFILE_LOADING, CLEAR_PROFILE } from './types'
 import { API } from '../../utils/routes'
 
 export const getCurrentProfile = () => dispatch => {
@@ -12,8 +12,7 @@ export const getCurrentProfile = () => dispatch => {
         payload: res.data
       })
     })
-    .catch(err => {
-      console.log(err)
+    .catch(err => {      
       dispatch({
         type: GET_CURRENT_PROFILE,
         payload: {}
