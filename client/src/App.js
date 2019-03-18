@@ -13,6 +13,7 @@ import Landing from './components/layout/Landing'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Dashboard from './components/dashboard/Dashboard'
+import ProfileDetails from './components/dashboard/ProfileDetails'
 import Footer from './components/layout/Footer'
 
 const token = localStorage.jwtToken
@@ -41,6 +42,9 @@ class App extends Component {
             <Route exact path="/register" component={ Register } />
             <Switch>
               <AuthRoute exact path="/dashboard" component={ Dashboard } />
+            </Switch>
+            <Switch>
+              <AuthRoute exact path="/dashboard/profile" component={ ProfileDetails } />
             </Switch>
             <Footer />
           </div>
