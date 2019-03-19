@@ -16,7 +16,11 @@ const Login = props => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    props.authorizeUser(values, props.history)
+    props.authorizeUser(values, props.history)    
+  }
+
+  if(props.auth.isAuthenticated){
+    props.history.push('/dashboard')
   }
 
   return(
@@ -59,11 +63,13 @@ const Login = props => {
 }
 
 Login.propTypes = {
+  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   authorizeUser: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   errors: state.errors
 })
 

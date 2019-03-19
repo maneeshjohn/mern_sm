@@ -21,7 +21,7 @@ export const authorizeUser = (data, history) => dispatch => {
         setAuthToken(token)
         const user = jwt_decode(token)
         dispatch(setUser(user))
-        history.push('/dashboard')
+        //history.push('/dashboard')
       })
       .catch(err => dispatch({
         type: GET_ERRORS,

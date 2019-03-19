@@ -10,23 +10,26 @@ const ProfileDetails = props => {
 
   const { profile, errors } = props
   const { data } = profile
+  let skills = ''
+  if(data.skills){
+    skills = data.skills.join(',')
+  }
 
   const [links, setLinks] = useState(false)
   const [details, setDetails] = useState(
     {
-      handle: '',
-      position: 0,
-      company: '',
-      website: '',
-      location: '',
-      skills: '',
-      github: '',
-      bio: '',
-      twitter: '',
-      facebook: '',
-      instagram: '',
-      youtube: '',
-      linkedin: ''
+      handle: data.handle || '',
+      position: data.position || '',      
+      website: data.website || '',
+      location: data.location || '',
+      skills,
+      github: data.github || '',
+      bio: data.bio || '',
+      twitter: data.twitter || '',
+      facebook: data.facebook || '',
+      instagram: data.instagram || '',
+      youtube: data.youtube || '',
+      linkedin: data.linkedin || ''
     }
   )
 
@@ -84,7 +87,7 @@ const ProfileDetails = props => {
     </div>
 
   const statusOptions = [
-    { label: 'Current Position *', value: 0 },
+    { label: 'Current Position *', value: '' },
     { label: 'Developer', value: 'Developer' },
     { label: 'Manager', value: 'Manager' },
     { label: 'Student', value: 'Student' },
@@ -98,7 +101,7 @@ const ProfileDetails = props => {
       <Container>
         <Row>
           <Col md="7" className="m-auto">
-            <h1 className="display-4 text-center">Create Profile</h1>
+            <h1 className="display-4 text-center">{ data.handle ?'Edit': 'Create' } Profile</h1>
             <p className="lead text-center">Enter your details and distinguish yourself</p>
             <Form
               onSubmit={ onSubmit }
@@ -117,14 +120,7 @@ const ProfileDetails = props => {
                 change={ handleChange }
                 options={ statusOptions }
                 error={ errors.position }
-                info="Where you currently are in your journey"/>
-              <InputComponent
-                name="company"
-                value={ details.company }
-                change={ handleChange }
-                placeholder="Current Company that you work"
-                error={ errors.company }
-                info="The company that you work for, if you are working"/>
+                info="Where you currently are in your journey"/>              
               <InputComponent
                 name="website"
                 value={ details.website }

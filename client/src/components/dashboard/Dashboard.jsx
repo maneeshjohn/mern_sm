@@ -3,34 +3,48 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Container } from 'reactstrap'
-import { getCurrentProfile } from '../../redux/actions/profileActions'
+import { getCurrentProfile, deleteProfile } from '../../redux/actions/profileActions'
 import Spinner from '../common/Spinner'
+import ProfileActions from './ProfileActions'
 
 const Dashboard = props => {  
 
   useEffect(() => {
     props.getCurrentProfile()        
   }, [])
-  
-  const { profile } = props
+
+  const deletAccount = () => {
+    props.deleteProfile()
+  }
 
   let dashboardContent
-  if(profile.loading){
+  if(props.profile.loading || props.profile.data === null){
     dashboardContent = <Spinner />
   } else {
-    if(Object.keys(profile.data).length > 0){
+    if(Object.keys(props.profile.data).length > 0){
       dashboardContent = (
-        <div>
-          <h1>TBD</h1>
-        </div>
+        <Container>
+          <p className="lead text-muted">Welcome{' '} 
+            <Link to={`/${ props.profile.data.handle }`}>
+              { props.auth.user.name }
+            </Link>
+          </p>
+          <ProfileActions />
+          <br />
+          <button
+            onClick={ deletAccount }            
+            className="btn btn-danger m-3">
+            Delete Account
+          </button>
+        </Container>
       )
     } else {
       dashboardContent = (
-        <div className="p-5">
+        <Container className="p-5">
           <p className="lead text-muted">Welcome { props.auth.user.name }</p>
           <p>You don't have a profile yet. You can create one below</p>
           <Link to="dashboard/profile" className="btn btn-info btn-lg">Create Profile</Link>
-        </div>
+        </Container>
       )
     }
   }
@@ -48,7 +62,8 @@ const Dashboard = props => {
 Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired
+  getCurrentProfile: PropTypes.func.isRequired,
+  deleteProfile: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -58,5 +73,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { getCurrentProfile, deleteProfile }
 )(Dashboard)

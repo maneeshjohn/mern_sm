@@ -60,3 +60,14 @@ img {
   text-decoration: none;
   color: #BBB;
 }
+
+.btn-group .btn-light {
+  display: flex;  
+  align-items: center;
+}
+
+.btn-group .btn-light .material-icons {
+  color: #3498db;
+  font-size: 1.4rem;
+  padding: .2rem;
+}
