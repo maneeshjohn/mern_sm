@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FormGroup, Input, FormText } from 'reactstrap'
+import { FormGroup, Input, Label, FormText } from 'reactstrap'
 
 export const InputComponent = props =>
   <FormGroup>
@@ -99,4 +99,24 @@ export const InputGroup = props =>
 
 InputGroup.defaultProps = {
   type: 'text'
-} 
+}
+
+export const CheckBox = props =>
+  <FormGroup check>
+    <Label check>
+      <Input
+        type="checkbox"
+        name={ props.name }
+        checked={ props.value }
+        onChange={ props.change }/>
+        <FormText>{ props.info }</FormText>
+        <br />
+      </Label>    
+  </FormGroup>
+
+InputGroup.propTypes = {  
+  name: PropTypes.string.isRequired,
+  value: PropTypes.bool.isRequired,
+  change: PropTypes.func.isRequired,
+  info: PropTypes.string
+}

@@ -6,6 +6,8 @@ import { Container } from 'reactstrap'
 import { getCurrentProfile, deleteProfile } from '../../redux/actions/profileActions'
 import Spinner from '../common/Spinner'
 import ProfileActions from './ProfileActions'
+import Experience from './Experience'
+import Education from './Education'
 
 const Dashboard = props => {  
 
@@ -30,6 +32,12 @@ const Dashboard = props => {
             </Link>
           </p>
           <ProfileActions />
+          <hr />
+          <p className="lead"><strong>Experience</strong></p>
+          <Experience data={ props.profile.data.experience } />
+          <hr />
+          <p className="lead"><strong>Education</strong></p>
+          <Education data={ props.profile.data.education } />
           <br />
           <button
             onClick={ deletAccount }            

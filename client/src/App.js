@@ -12,8 +12,11 @@ import Navigation from './components/layout/Navigation'
 import Landing from './components/layout/Landing'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
+import Profiles from './components/profiles/Profiles'
 import Dashboard from './components/dashboard/Dashboard'
 import ProfileDetails from './components/dashboard/ProfileDetails'
+import AddEducation from './components/dashboard/AddEducation'
+import AddExperience from './components/dashboard/AddExperience'
 import Footer from './components/layout/Footer'
 
 const token = localStorage.jwtToken
@@ -40,12 +43,19 @@ class App extends Component {
             <Route exact path="/" component={ Landing } />
             <Route exact path="/login" component={ Login } />
             <Route exact path="/register" component={ Register } />
+            <Route exact path="/profiles" component={ Profiles } />
             <Switch>
               <AuthRoute exact path="/dashboard" component={ Dashboard } />
             </Switch>
             <Switch>
               <AuthRoute exact path="/dashboard/profile" component={ ProfileDetails } />
             </Switch>
+            <Switch>
+              <AuthRoute exact path="/add/education" component={ AddEducation } />
+            </Switch>
+            <Switch>
+              <AuthRoute exact path="/add/experience" component={ AddExperience } />
+            </Switch>            
             <Footer />
           </div>
         </BrowserRouter>

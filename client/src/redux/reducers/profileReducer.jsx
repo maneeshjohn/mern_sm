@@ -1,4 +1,4 @@
-import { GET_CURRENT_PROFILE, PROFILE_LOADING, CLEAR_PROFILE } from '../actions/types'
+import { GET_CURRENT_PROFILE, GET_ALL_PROFILES, PROFILE_LOADING, CLEAR_PROFILE } from '../actions/types'
 
 const initialState = {
   data: {},
@@ -14,12 +14,18 @@ export default (state = initialState, action) => {
         data: action.payload,
         loading: false
       }
-      case PROFILE_LOADING:
+    case GET_ALL_PROFILES:
+      return {
+        ...state,
+        list: action.payload,
+        loading: false
+      }
+    case PROFILE_LOADING:
       return {
         ...state,        
         loading: true
       }
-      case CLEAR_PROFILE:
+    case CLEAR_PROFILE:
       return {
         ...state,
         data: null        

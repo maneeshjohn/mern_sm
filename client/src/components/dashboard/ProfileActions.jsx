@@ -7,11 +7,11 @@ export default props =>
       <i className="material-icons">account_circle</i>
       Edit Profile
     </Link>
-    <Link to="/dashboard/add/education" className="btn btn-light">
+    <Link to="/add/education" className="btn btn-light">
       <i className="material-icons">school</i>
       Add Education
     </Link>
-    <Link to="/dashboard/add/experience" className="btn btn-light">
+    <Link to="/add/experience" className="btn btn-light">
       <i className="material-icons">work</i>
       Add Experience
     </Link>
