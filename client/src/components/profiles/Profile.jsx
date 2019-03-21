@@ -24,15 +24,13 @@ const Profile = props => {
     if(Object.keys(props.profile.list).length > 0){
       profileContent = (
         <Row>
-          <Col md="6">
+          <Col md="12">
             <Link
               to="/profiles"
               className="btn btn-sm btn-light">
               Back
-            </Link>
-          </Col>
-          <Col md="6">
-            <Header />
+            </Link>          
+            <Header profile={ props.profile.list } />
             <About />
             <Credentials />
             <Github />
