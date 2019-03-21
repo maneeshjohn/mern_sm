@@ -13,6 +13,7 @@ import Landing from './components/layout/Landing'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Profiles from './components/profiles/Profiles'
+import Profile from './components/profiles/Profile'
 import Dashboard from './components/dashboard/Dashboard'
 import ProfileDetails from './components/dashboard/ProfileDetails'
 import AddEducation from './components/dashboard/AddEducation'
@@ -44,6 +45,7 @@ class App extends Component {
             <Route exact path="/login" component={ Login } />
             <Route exact path="/register" component={ Register } />
             <Route exact path="/profiles" component={ Profiles } />
+            <Route exact path="/profile/:handle" component={ Profile } />
             <Switch>
               <AuthRoute exact path="/dashboard" component={ Dashboard } />
             </Switch>

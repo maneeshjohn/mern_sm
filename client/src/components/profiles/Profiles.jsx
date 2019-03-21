@@ -1,22 +1,21 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Container, Row, Col } from 'reactstrap'
+import { Container } from 'reactstrap'
 import { getProfiles } from '../../redux/actions/profileActions'
+import ProfileCard from './ProfileCard'
 import Spinner from '../common/Spinner'
 
 const Profiles = props => {
   
   useEffect(() => {
     props.getProfiles()
-  }, [])
+  }, [])  
 
   const renderProfiles = () => {
     return props.profile.list.map(
       profile =>
-        <div key={ profile.id }>
-          <h4>{ profile.handle }</h4>
-        </div>
+        <ProfileCard key={ profile.id } profile={ profile } />
     )
   }
 

@@ -61,7 +61,8 @@ img {
   color: #BBB;
 }
 
-.btn-group .btn-light {
+.btn-group .btn-light,
+.list-group .list-group-item {
   display: flex;  
   align-items: center;
 }
