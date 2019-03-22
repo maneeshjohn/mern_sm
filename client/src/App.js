@@ -43,9 +43,11 @@ class App extends Component {
             <Navigation />
             <Route exact path="/" component={ Landing } />
             <Route exact path="/login" component={ Login } />
-            <Route exact path="/register" component={ Register } />
-            <Route exact path="/profiles" component={ Profiles } />
+            <Route exact path="/register" component={ Register } />            
             <Route exact path="/profile/:handle" component={ Profile } />
+            <Switch>
+              <AuthRoute exact path="/profiles" component={ Profiles } />
+            </Switch>
             <Switch>
               <AuthRoute exact path="/dashboard" component={ Dashboard } />
             </Switch>

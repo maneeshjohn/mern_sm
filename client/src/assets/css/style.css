@@ -62,8 +62,8 @@ img {
 }
 
 .btn-group .btn-light,
-.list-group .list-group-item {
-  display: flex;  
+.icon-group .list-group-item {
+  display: flex;
   align-items: center;
 }
 
@@ -71,4 +71,10 @@ img {
   color: #3498db;
   font-size: 1.4rem;
   padding: .2rem;
+}
+
+.text-center .rounded-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

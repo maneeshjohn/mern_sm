@@ -24,7 +24,7 @@ const ProfileCard = ({ profile }) => {
         </Col>
         <Col md="4">
           <h4>Skills</h4>
-          <ul className="list-group">
+          <ul className="list-group icon-group">
             {profile.skills.map(
               skill =>
                 <li

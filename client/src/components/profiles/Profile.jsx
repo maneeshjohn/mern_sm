@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Container, Row, Col } from 'reactstrap'
 import { getProfileByHandle } from '../../redux/actions/profileActions'
@@ -21,18 +20,15 @@ const Profile = props => {
   if(props.profile.loading){
     profileContent = <Spinner />
   } else {
-    if(Object.keys(props.profile.list).length > 0){
+    if(Object.keys(props.profile.item).length > 0){
       profileContent = (
         <Row>
-          <Col md="12">
-            <Link
-              to="/profiles"
-              className="btn btn-sm btn-light">
-              Back
-            </Link>          
-            <Header profile={ props.profile.list } />
-            <About />
-            <Credentials />
+          <Col md="12">            
+            <Header profile={ props.profile.item } />
+            <About profile={ props.profile.item } />
+            <Credentials
+              education={ props.profile.item.education }
+              experience={ props.profile.item.experience }/>
             <Github />
           </Col>
         </Row>

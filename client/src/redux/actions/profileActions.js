@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_CURRENT_PROFILE, GET_ALL_PROFILES, PROFILE_LOADING, CLEAR_PROFILE, GET_ERRORS, AUTHENTICATE_USER } from './types'
+import { GET_CURRENT_PROFILE, GET_ALL_PROFILES, GET_ONE_PROFILE, PROFILE_LOADING, CLEAR_PROFILE, GET_ERRORS, AUTHENTICATE_USER } from './types'
 import { API } from '../../utils/routes'
 
 export const getCurrentProfile = () => dispatch => {
@@ -42,7 +42,7 @@ export const getProfileByHandle = data => dispatch => {
   axios.get(`${API}/api/profile/handle/${data}`)
     .then(res => {
       dispatch({
-        type: GET_ALL_PROFILES,
+        type: GET_ONE_PROFILE,
         payload: res.data
       })
     })
