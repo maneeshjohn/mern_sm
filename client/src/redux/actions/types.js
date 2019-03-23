@@ -1,13 +1,20 @@
-//  Auth actions
+//  Auth
 export const AUTHENTICATE_USER = 'AUTHENTICATE_USER'
 
-//  Dahboard
+//  Profile
 export const GET_CURRENT_PROFILE = 'GET_CURRENT_PROFILE'
 export const CLEAR_PROFILE = 'CLEAR_PROFILE'
 export const PROFILE_LOADING = 'PROFILE_LOADING'
 export const PROFILE_NOT_FOUND = 'PROFILE_NOT_FOUND'
 export const GET_ALL_PROFILES = 'GET_ALL_PROFILES'
 export const GET_ONE_PROFILE = 'GET_ONE_PROFILE'
+
+//  Post
+export const SET_POST_LOADING = 'SET_POST_LOADING'
+export const GET_ALL_POSTS = 'GET_ALL_POSTS'
+export const GET_SINGLE_POST = 'GET_SINGLE_POST'
+export const ADD_POST = 'ADD_POST'
+export const DELETE_POST = 'DELETE_POST'
 
 //  Errors
 export const GET_ERRORS = 'GET_ERRORS'

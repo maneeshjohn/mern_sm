@@ -18,6 +18,8 @@ import Dashboard from './components/dashboard/Dashboard'
 import ProfileDetails from './components/dashboard/ProfileDetails'
 import AddEducation from './components/dashboard/AddEducation'
 import AddExperience from './components/dashboard/AddExperience'
+import Posts from './components/posts/Posts'
+import AddPost from './components/posts/AddPost'
 import Footer from './components/layout/Footer'
 
 const token = localStorage.jwtToken
@@ -59,7 +61,13 @@ class App extends Component {
             </Switch>
             <Switch>
               <AuthRoute exact path="/add/experience" component={ AddExperience } />
-            </Switch>            
+            </Switch>
+            <Switch>
+              <AuthRoute exact path="/posts" component={ Posts } />
+            </Switch>
+            <Switch>
+              <AuthRoute exact path="/add/post" component={ AddPost } />
+            </Switch>
             <Footer />
           </div>
         </BrowserRouter>
